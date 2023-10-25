@@ -1,21 +1,20 @@
 import telebot
-import g4f
 
-def ask(ss):
-    response=g4f.ChatCompletion.create(
-        model=g4f.models.gpt_35_turbo,
-        messages=[
-            {"role":"user",'content':ss}
-        ])
-    return response
+# Вставьте ваш токен бота
+TOKEN = '6494467416:AAHHlruM-FKKyAyiWpPNviKsrfZuw0K3ECQ'
 
+# Создаем экземпляр бота
+bot = telebot.TeleBot(TOKEN)
 
-BOT_TOKEN = '6494467416:AAHHlruM-FKKyAyiWpPNviKsrfZuw0K3ECQ'
-id_adm='1589821395'
-bot = telebot.TeleBot(BOT_TOKEN)
+# Обработчик команды /start
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.send_message(message.chat.id, 'Привет! Я бот для отправки сообщений.')
 
-@bot.message_handler(func=lambda msg: True)
-def echo_all(message):
-    bot.reply_to(message, ask(message.text))
+# Обработчик команды /hello
+@bot.message_handler(commands=['hello'])
+def hello(message):
+    bot.send_message(message.chat.id, 'Helloo!')
 
-bot.infinity_polling()
+# Запускаем бота
+bot.polling()
